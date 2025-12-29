@@ -126,6 +126,24 @@ mietvertrag_kb = ReplyKeyboardMarkup(
     resize_keyboard=True,
 )
 
+# Ablauf des Verkaufs (sales process) keyboard
+ablauf_kb = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text="📅 Beratung vereinbaren")],
+        [KeyboardButton(text="🔙 Zurueck zum Hauptmenue")],
+    ],
+    resize_keyboard=True,
+)
+
+# About us keyboard
+about_kb = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text="📞 Kontakt")],
+        [KeyboardButton(text="🔙 Zurueck zum Hauptmenue")],
+    ],
+    resize_keyboard=True,
+)
+
 
 # --- временное хранилище на демо (в проде заменить на Postgres) ---
 USERS: Dict[int, Dict] = {}  
@@ -179,10 +197,11 @@ async def about_me(m: Message):
         await m.answer_photo(
             photo=photo,
             caption=caption,
-            parse_mode="Markdown"  # ← включаем обработку звёздочек
+            parse_mode="Markdown",  # ← включаем обработку звёздочек
+            reply_markup=about_kb,
         )
     else:
-        await m.answer("Guten Tag! [Profilbild nicht gefunden]")
+        await m.answer("Guten Tag! [Profilbild nicht gefunden]", reply_markup=about_kb)
 
 
 @dp.message(F.text == "🏠 Dienstleistungen")
@@ -196,6 +215,28 @@ async def services_menu(m: Message):
         "Welche Dienstleistung interessiert Sie?"
     )
     await m.answer(text, reply_markup=services_kb)
+    
+
+@dp.message(F.text == "🧭 Ablauf des Verkaufs")
+async def sale_process(m: Message):
+    text = (
+        "So laeuft ein professioneller Immobilienverkauf ab:\n"
+        "1) Unverbindliche Erstberatung\n"
+        "2) Bewertung und Offerte\n"
+        "3) Marketing und Fotos\n"
+        "4) Inserate\n"
+        "5) Besichtigungen\n"
+        "6) Notar\n"
+        "7) Uebergabe\n\n"
+        "Moechten Sie eine Beratung vereinbaren?"
+    )
+    await m.answer(text, reply_markup=ablauf_kb)
+
+
+@dp.message(F.text == "📅 Beratung vereinbaren")
+async def schedule_consult(m: Message):
+    await m.answer("Danke — wir verbinden Sie mit unseren Kontaktdaten.", reply_markup=kb)
+    await contacts(m)
     
 
 @dp.message(F.text == "💼 Preise & Bewertungen")
