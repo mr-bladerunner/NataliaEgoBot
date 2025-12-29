@@ -19,7 +19,6 @@ load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 TZ = os.getenv("TZ", "Europe/Zurich")
 MODE = os.getenv("MODE", "dev").lower()
-TZ = os.getenv("TZ", "Europe/Zurich")
 if not BOT_TOKEN:
     raise RuntimeError("BOT_TOKEN is not set. Provide it via environment variable.")
 
@@ -185,14 +184,9 @@ async def about_me(m: Message):
     if os.path.isfile(photo_path):
         photo = FSInputFile(photo_path)
         caption = (
-            "Guten Tag,\n"
-            "ich bin Ihr virtueller Assistent für Immobilienfragen.\n\n"
-            "Als Immobilienexperte stehe ich Ihnen gerne mit folgenden Dienstleistungen zur Verfügung:\n\n"
-            "• *Immobilienbewertung*\n"
-            "• *Immobilienvermarktung*\n"
-            "• *Vermietung*\n"
-            "• *Verkauf von Liegenschaften*\n\n"
-            "Ich freue mich darauf, Sie kompetent und zuverlässig zu unterstützen."
+            "Erfahrung, Transparenz, Diskretion.\n"
+            "Ihre Immobilie ist in zuverlaessigen Haenden – von der Bewertung bis zur Schluesseluebergabe.\n\n"
+            "Moechten Sie direkt Kontakt aufnehmen?"
         )
         await m.answer_photo(
             photo=photo,
@@ -201,7 +195,12 @@ async def about_me(m: Message):
             reply_markup=about_kb,
         )
     else:
-        await m.answer("Guten Tag! [Profilbild nicht gefunden]", reply_markup=about_kb)
+        await m.answer(
+            "Erfahrung, Transparenz, Diskretion.\n"
+            "Ihre Immobilie ist in zuverlaessigen Haenden – von der Bewertung bis zur Schluesseluebergabe.\n\n"
+            "Moechten Sie direkt Kontakt aufnehmen?",
+            reply_markup=about_kb,
+        )
 
 
 @dp.message(F.text == "🏠 Dienstleistungen")
@@ -417,7 +416,7 @@ WEBHOOK_PATH = "/webhook"
 WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET", "your_strong_secret_here")
 BASE_WEBHOOK_URL = os.getenv("BASE_WEBHOOK_URL", "https://your-bot.onrender.com")
 
-MODE = os.getenv("MODE", "dev").lower()  # dev или prod
+# MODE is defined above near the configuration section
 
 async def on_startup(bot: Bot) -> None:
     await bot.set_webhook(
