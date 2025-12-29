@@ -39,8 +39,8 @@ kb = ReplyKeyboardMarkup(
 # Sub-keyboards for services flow
 services_kb = ReplyKeyboardMarkup(
     keyboard=[
-        [KeyboardButton(text="🏡 Immobilie verkaufen"), KeyboardButton(text="💰 Immobilie bewerten lassen")],
-        [KeyboardButton(text="🏘️ Immobilie vermieten"), KeyboardButton(text="💬 Kostenlose Beratung")],
+        [KeyboardButton(text="🏡 Immobilien verkaufen"), KeyboardButton(text="💰 Immobilien bewerten lassen")],
+        [KeyboardButton(text="🏘️ Immobilien vermieten"), KeyboardButton(text="💬 Kostenlose Beratung")],
         [KeyboardButton(text="🔙 Zurück zum Hauptmenü")],
     ],
     resize_keyboard=True,
@@ -350,7 +350,7 @@ async def free_first_consult(m: Message):
     await contacts(m)
 
 
-@dp.message(F.text == "🏡 Immobilie verkaufen")
+@dp.message(F.text == "🏡 Immobilien verkaufen")
 async def sell_property(m: Message):
     text = (
         "Provision: In der Regel 2-3% des Verkaufspreises.\n"
@@ -361,7 +361,8 @@ async def sell_property(m: Message):
 
 @dp.message(F.text == "💰 Immobilien bewerten lassen")
 async def valuation_start(m: Message):
-    await m.answer("Zu welchem Objekttyp möchten Sie eine Bewertung?", reply_markup=valuation_kb)
+    # Redirect to the Preise & Bewertungen valuation flow
+    await prices_valuation(m)
 
 
 @dp.message(F.text == "🏘️ Immobilien vermieten")
