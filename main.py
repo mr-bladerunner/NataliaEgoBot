@@ -298,17 +298,19 @@ async def sale_request(m: Message):
     await contacts(m)
 
 
+# заменили текст 29.12
+
 @dp.message(F.text == "🏘️ Vermietung")
 async def prices_rent(m: Message):
     await m.answer(
-        "Gebühr für Vermietung: 1 Monatsmiete. Optional: Mietvertragserstellung CHF 80.\nWas möchten Sie tun?",
+        "Gebühr für Vermietung: 1 Monatsmiete. Mietvertragserstellung CHF 39.\nWas möchten Sie tun?",
         reply_markup=rent_options_kb,
     )
 
 
-@dp.message(F.text == "🧾 Mietvertrag erstellen lassen (CHF 80)")
+@dp.message(F.text == "🧾 Mietvertrag erstellen lassen (CHF 39)")
 async def rent_mietvertrag(m: Message):
-    await m.answer("Mietvertragserstellung: CHF 80. Möchten Sie starten?", reply_markup=mietvertrag_kb)
+    await m.answer("Mietvertragserstellung: CHF 39. Möchten Sie starten?", reply_markup=mietvertrag_kb)
 
 
 @dp.message(F.text == "👥 Mieter finden")
@@ -319,7 +321,7 @@ async def rent_find_tenant(m: Message):
 
 @dp.message(F.text == "📄 Mietvertragserstellung")
 async def prices_mietvertrag(m: Message):
-    await m.answer("Mietvertragserstellung: CHF 80. Möchten Sie starten?", reply_markup=mietvertrag_kb)
+    await m.answer("Mietvertragserstellung: CHF 39. Möchten Sie starten?", reply_markup=mietvertrag_kb)
 
 
 @dp.message(F.text == "✅ Ja, bitte")
@@ -368,7 +370,7 @@ async def valuation_start(m: Message):
 @dp.message(F.text == "🏘️ Immobilien vermieten")
 async def rent_property(m: Message):
     text = (
-        "Gebühr: 1 Monatsmiete. Optional: Mietvertrag CHF 80.\n"
+        "Gebühr: 1 Monatsmiete. Optional: Mietvertrag CHF 39.\n"
         "Möchten Sie ein Angebot oder eine Kontaktaufnahme?"
     )
     await m.answer(text, reply_markup=rent_kb)
